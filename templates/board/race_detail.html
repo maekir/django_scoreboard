@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="mt-2">{{ race.name }}</h1>
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Team</th>
+        <th scope="col">Vehicle</th>
+        <th scope="col">Description</th>
+        <th scope="col">Experience</th>
+        <th scope="col">Class</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td>{{ race.first.name_r }}</td>
+        <td>{{ race.first.name_t }}</td>
+        <td>{{ race.first.desc_c }}</td>
+        <td>{{ race.first.desc_r }}</td>
+        <td>{{ race.first.get_exp_r_display }}</td>
+        <td>{{ race.first.get_class_r_display }}</td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>{{ race.second.name_r }}</td>
+        <td>{{ race.second.name_t }}</td>
+        <td>{{ race.second.desc_c }}</td>
+        <td>{{ race.second.desc_r }}</td>
+        <td>{{ race.second.get_exp_r_display }}</td>
+        <td>{{ race.second.get_class_r_display }}</td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td>{{ race.third.name_r }}</td>
+        <td>{{ race.third.name_t }}</td>
+        <td>{{ race.third.desc_c }}</td>
+        <td>{{ race.third.desc_r }}</td>
+        <td>{{ race.third.get_exp_r_display }}</td>
+        <td>{{ race.third.get_class_r_display }}</td>
+    </tr>
+    <tr>
+        <th scope="row">4</th>
+        <td>{{ race.fourth.name_r }}</td>
+        <td>{{ race.fourth.name_t }}</td>
+        <td>{{ race.fourth.desc_c }}</td>
+        <td>{{ race.fourth.desc_r }}</td>
+        <td>{{ race.fourth.get_exp_r_display }}</td>
+        <td>{{ race.fourth.get_class_r_display }}</td>
+    </tr>
+    <tr>
+        <th scope="row">5</th>
+        <td>{{ race.fifth.name_r }}</td>
+        <td>{{ race.fifth.name_t }}</td>
+        <td>{{ race.fifth.desc_c }}</td>
+        <td>{{ race.fifth.desc_r }}</td>
+        <td>{{ race.fifth.get_exp_r_display }}</td>
+        <td>{{ race.fifth.get_class_r_display }}</td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="mt-5">Comments</h2>
+{% for comment in race.race_id.all %}
+    <div class="card mb-1">
+        <div class="card-body">
+            {{ comment.text }}
+        </div>
+        <div class="card-footer text-muted">
+            User: {{ comment.commenter }} | Type: {{ comment.get_type_display }}
+        </div>
+    </div>
+{% endfor %}
+{% if user.is_authenticated %}
+<div class="card mb-5 mt-4">
+    <div class="card-body">
+        <h3 class="card-title">Add comment</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="comment_text">{{ form.text.label_tag }}</label>
+            <div id="comment_text">{{ form.text }}</div>
+            <label for="comment_type">{{ form.type.label_tag }}</label>
+            <div id="comment_type">{{ form.type }}</div>
+            <button type="submit" class="save btn btn-default mt-3">Post</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

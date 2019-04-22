@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Scoreboards</h1>
+  <ul>
+    {% for race in races %}
+    <h2><a href="{{ race.get_absolute_url }}">{{ race.name }}</a></h2>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Team</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ race.first.name_r }}</td>
+                <td>{{ race.first.name_t }}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>{{ race.second.name_r }}</td>
+                <td>{{ race.second.name_t }}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>{{ race.third.name_r }}</td>
+                <td>{{ race.third.name_t }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+  </ul>  
+{% endblock %}

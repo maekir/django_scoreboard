@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="jumbotron">
+      {% if registered %}
+        <h1>You're registered!</h1>
+        <h2>Now you can log in.</h2>
+        <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+      {% elif user.is_authenticated %}
+        <h1>You're logged in!</h1>
+      {% else %}
+        <h1>Register Here</h1>
+        <h3>Just fill out the form.</h3>
+      <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+        <input type="submit" name="" value="Register">
+      </form>  
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
