@@ -1,29 +1,29 @@
+import uuid
 from django.db import models
 from django.urls import reverse
-import uuid
 from django.contrib.auth.models import User
 
-class Racer(models.Model):
-    """Model representing a racer"""
-    # PK
-    id = models.UUIDField('Identifier', primary_key=True, default=uuid.uuid4, editable=False)
-    # name of racer
-    name_r = models.CharField('Name', max_length=200, help_text='Enter the racer\'s name')
-    # name of team
-    name_t = models.CharField('Team', max_length=200, help_text='Enter the team\'s name')
-    # description of car
-    desc_c = models.CharField('Car', max_length=1000, help_text='Enter the car\'s description')
-    # description of racer
-    desc_r = models.CharField('Description', max_length=1000, help_text='Enter the racer\'s description')
 
+class Racer(models.Model):
     EXP_RACER = (
         ('B', 'Beginner'),
         ('I', 'Intermediate'),
         ('E', 'Experienced'),
         ('P', 'Professional'),
     )
+    
+    CLASS_RACER = (
+        ('4', 'Fourth'),
+        ('3', 'Third'),
+        ('2', 'Second'),
+        ('1', 'First'),
+    )
 
-    # experience of racer
+    id = models.UUIDField('Identifier', primary_key=True, default=uuid.uuid4, editable=False)
+    name_r = models.CharField('Name', max_length=200, help_text='Enter the racer\'s name')
+    name_t = models.CharField('Team', max_length=200, help_text='Enter the team\'s name')
+    desc_c = models.CharField('Car', max_length=1000, help_text='Enter the car\'s description')
+    desc_r = models.CharField('Description', max_length=1000, help_text='Enter the racer\'s description')
     exp_r = models.CharField(
         'Experience',
         max_length=1,
@@ -32,15 +32,6 @@ class Racer(models.Model):
         default='B',
         help_text='Choose the racer\'s experience'
     )
-
-    CLASS_RACER = (
-        ('4', 'Fourth'),
-        ('3', 'Third'),
-        ('2', 'Second'),
-        ('1', 'First'),
-    )
-    
-    # class of racer
     class_r = models.CharField(
         'Class',
         max_length=1,
@@ -51,7 +42,6 @@ class Racer(models.Model):
     )
 
     def __str__(self):
-        """String for representing the Model object."""
         return self.name_r
 
 
@@ -71,15 +61,16 @@ class Race(models.Model):
         return self.name
 
 class Comment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    commenter = models.ForeignKey(User, verbose_name='commenter', related_name='commenter_id', on_delete=models.SET_NULL, null=True)
-    race = models.ForeignKey(Race, verbose_name='race', related_name='race_id', on_delete=models.SET_NULL, null=True) 
-    text = models.CharField('Text', max_length=3000, help_text='Enter comment text')
     COMMENT_TYPE = (
         ('0', 'Other'),
         ('1', 'Question about the race'),
         ('2', 'Collaboration inquiry')
     )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    commenter = models.ForeignKey(User, verbose_name='commenter', related_name='commenter_id', on_delete=models.SET_NULL, null=True)
+    race = models.ForeignKey(Race, verbose_name='race', related_name='race_id', on_delete=models.SET_NULL, null=True) 
+    text = models.CharField('Text', max_length=3000, help_text='Enter comment text')
     type = models.CharField(
         'Type',
         max_length=1,
@@ -87,6 +78,6 @@ class Comment(models.Model):
         blank=False,
         default='0',
     )
-    def __str__(self):
-        return f'{self.id} ({self.race})'
 
+    def __str__(self):
+        return self.name

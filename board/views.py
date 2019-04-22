@@ -1,14 +1,12 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views import generic
-from board.forms import UserForm
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import FormMixin
-from board.models import Racer, Race, Comment
-from board.forms import CommentForm
 from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.views import generic
+
+from board.models import Racer, Race, Comment
+from board.forms import UserForm
+from board.forms import CommentForm
+
 
 def index(request):
     num_racers = Racer.objects.all().count()
@@ -18,7 +16,6 @@ def index(request):
         'num_races': num_races,
     }
     return render(request, 'index.html', context=context)
-
 
 def register(request):
     registered = False
@@ -39,14 +36,12 @@ def register(request):
     }
     return render(request,'board/registration.html', context)
 
-
 def races_list(request):
     races = Race.objects.all()
     context = {
         "races": races,
     }
     return render(request, 'board/races_list.html', context)
-
 
 def race_detail(request, id):
     race = Race.objects.get(id=id)
